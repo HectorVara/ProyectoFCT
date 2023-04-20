@@ -1,16 +1,17 @@
 package com.proyecto.FCT.utils;
 
 import com.proyecto.FCT.models.parseModels.Transaction;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class XMLParser {
     private JAXBContext jaxbContext = null;
 
     public Transaction parseXML(String ruta) throws JAXBException {
+        System.out.println(ruta);
         //Se parsea la clase Transaction, que hace referencia al objto padre del XML y a partir de éste
         //se va accediendo a las capas inferiores(Data --> Document)
         jaxbContext = JAXBContext.newInstance(Transaction.class);

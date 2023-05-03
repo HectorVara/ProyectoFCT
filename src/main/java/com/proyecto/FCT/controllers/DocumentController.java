@@ -18,7 +18,7 @@ ParserXMLService parserXMLService;
 
 @GetMapping("/xml")
 public Document parseXML(@RequestParam(required = true) String filename){
-    return parserXMLService.parseXML(filename);
+    return parserXMLService.parseXMLandSave(filename);
 
 
 }

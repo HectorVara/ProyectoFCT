@@ -1,6 +1,7 @@
 package com.proyecto.FCT.models.persistenceModels;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 import java.util.List;
@@ -136,13 +137,7 @@ public class Document {
         this.operationNumber = operationNumber;
     }
 
-   /* public String getIdDocumentType() {
-        return idDocumentType;
-    }
 
-    public void setIdDocumentType(String idDocumentType) {
-        this.idDocumentType = idDocumentType;
-    }*/
 
     public String getIdOperator() {
         return idOperator;

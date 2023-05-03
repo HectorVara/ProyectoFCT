@@ -25,6 +25,8 @@ public class Line {
     private String code;
     @XmlElement(name = "IdProductType")
     private String idProductType;
+
+    private String productTypeDescription;
     @XmlElement(name = "Model")
     private String model;
     @XmlElement(name = "Quality")
@@ -33,14 +35,23 @@ public class Line {
     private String color;
     @XmlElement(name = "Size")
     private String size;
+    @XmlElement(name="Quantity")
+    private int quantity;
+    @XmlElement(name="Sign")
+    private int sign;
+    @XmlElement(name="SignVoid")
+    private int signVoid;
+    @XmlElement(name="Description")
+    private String description;
+
 
 
 
     public Line() {
     }
 
-    public Line(String lineNumber, String unitGross, String totalGross, String unitInputPrice, String unitOriginalPrice, String unitMasterPrice, String code, String idProductType, String model, String quality, String color, String size) {
 
+    public Line(String lineNumber, String unitGross, String totalGross, String unitInputPrice, String unitOriginalPrice, String unitMasterPrice, String code, String idProductType, String productTypeDescription, String model, String quality, String color, String size, int quantity, int sign, int signVoid, String description) {
         this.lineNumber = lineNumber;
         this.unitGross = unitGross;
         this.totalGross = totalGross;
@@ -49,17 +60,24 @@ public class Line {
         this.unitMasterPrice = unitMasterPrice;
         this.code = code;
         this.idProductType = idProductType;
+        this.productTypeDescription = productTypeDescription;
         this.model = model;
         this.quality = quality;
         this.color = color;
         this.size = size;
+        this.quantity = quantity;
+        this.sign = sign;
+        this.signVoid = signVoid;
+        this.description = description;
     }
 
+    public String getProductTypeDescription() {
+        return productTypeDescription;
+    }
 
-
-
-
-
+    public void setProductTypeDescription(String productTypeDescription) {
+        this.productTypeDescription = productTypeDescription;
+    }
 
     public String getLineNumber() {
         return lineNumber;
@@ -157,5 +175,35 @@ public class Line {
         this.size = size;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getSign() {
+        return sign;
+    }
+
+    public void setSign(int sign) {
+        this.sign = sign;
+    }
+
+    public int getSignVoid() {
+        return signVoid;
+    }
+
+    public void setSignVoid(int signVoid) {
+        this.signVoid = signVoid;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

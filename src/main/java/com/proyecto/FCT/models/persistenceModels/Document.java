@@ -25,8 +25,7 @@ public class Document {
     private Date date;
     @Column(name="operationNumber")
     private String operationNumber;
-    @Column(name="idDocumentType")
-    private String idDocumentType;
+
     @Column(name="idOperator")
     private String idOperator;
 
@@ -35,9 +34,12 @@ public class Document {
 
     @OneToMany(mappedBy = "document",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Payment> payments;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="document_type_id", referencedColumnName = "id")
+    private DocumentType documentType;
 
 
-    public Document(long id, String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, String idDocumentType, String idOperator) {
+    public Document(long id, String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, DocumentType documentType, String idOperator) {
         this.id = id;
         this.uid = uid;
         this.idStore = idStore;
@@ -45,31 +47,31 @@ public class Document {
         this.sessionDate = sessionDate;
         this.date = date;
         this.operationNumber = operationNumber;
-        this.idDocumentType = idDocumentType;
+        this.documentType = documentType;
         this.idOperator = idOperator;
 
     }
 
-    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, String idDocumentType, String idOperator) {
+    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber,DocumentType documentType, String idOperator) {
         this.uid = uid;
         this.idStore = idStore;
         this.idWorkstation = idWorkstation;
         this.sessionDate = sessionDate;
         this.date = date;
         this.operationNumber = operationNumber;
-        this.idDocumentType = idDocumentType;
+        this.documentType = documentType;
         this.idOperator = idOperator;
 
     }
 
-    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, String idDocumentType, String idOperator, List<Line> lines,List<Payment> payments) {
+    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, DocumentType documentType, String idOperator, List<Line> lines,List<Payment> payments) {
         this.uid = uid;
         this.idStore = idStore;
         this.idWorkstation = idWorkstation;
         this.sessionDate = sessionDate;
         this.date = date;
         this.operationNumber = operationNumber;
-        this.idDocumentType = idDocumentType;
+        this.documentType = documentType;
         this.idOperator = idOperator;
         this.lines = lines;
         this.payments = payments;
@@ -134,13 +136,13 @@ public class Document {
         this.operationNumber = operationNumber;
     }
 
-    public String getIdDocumentType() {
+   /* public String getIdDocumentType() {
         return idDocumentType;
     }
 
     public void setIdDocumentType(String idDocumentType) {
         this.idDocumentType = idDocumentType;
-    }
+    }*/
 
     public String getIdOperator() {
         return idOperator;
@@ -166,5 +168,12 @@ public class Document {
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
     }
-}
 
+    public DocumentType getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(DocumentType documentType) {
+        this.documentType = documentType;
+    }
+}

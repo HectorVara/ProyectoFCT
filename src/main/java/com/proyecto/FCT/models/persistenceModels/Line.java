@@ -10,7 +10,7 @@ public class Line {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="line_id")
     private long line_id;
-    @ManyToOne(cascade = CascadeType.ALL, optional = true,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="document_id", referencedColumnName = "id")
     @JsonIgnore
     private Document document;
@@ -28,8 +28,8 @@ public class Line {
     private String unitMasterPrice;
     @Column(name="code")
     private String code;
-    @Column(name="idProductType")
-    private String idProductType;
+
+    //private String idProductType;
     @Column(name="model")
     private String model;
     @Column(name="quality")
@@ -39,8 +39,21 @@ public class Line {
     @Column(name="size")
     private String size;
 
-    //Hacen falta dos constructores con parámetros. Uno con el id y otro si él
-    public Line(long line_id, Document document, String lineNumber, String unitGross, String totalGross, String unitInputPrice, String unitOriginalPrice, String unitMasterPrice, String code, String idProductType, String model, String quality, String color, String size) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="product_type_id", referencedColumnName = "id")
+    private ProductType productType;
+
+
+
+    private int quantity;
+    private int sign;
+    private int signVoid;
+    private String description;
+
+//Hacen falta dos constructores con parámetros. Uno con el id y otro si él
+
+
+    public Line(long line_id, Document document, String lineNumber, String unitGross, String totalGross, String unitInputPrice, String unitOriginalPrice, String unitMasterPrice, String code, String model, String quality, String color, String size, ProductType productType, int quantity, int sign, int signVoid, String description) {
         this.line_id = line_id;
         this.document = document;
         this.lineNumber = lineNumber;
@@ -50,15 +63,19 @@ public class Line {
         this.unitOriginalPrice = unitOriginalPrice;
         this.unitMasterPrice = unitMasterPrice;
         this.code = code;
-        this.idProductType = idProductType;
         this.model = model;
         this.quality = quality;
         this.color = color;
         this.size = size;
+        this.productType = productType;
+        this.quantity = quantity;
+        this.sign = sign;
+        this.signVoid = signVoid;
+        this.description = description;
     }
 
-    public Line(Document document, String lineNumber, String unitGross, String totalGross, String unitInputPrice, String unitOriginalPrice, String unitMasterPrice, String code, String idProductType, String model, String quality, String color, String size) {
-        this.document= document;
+    public Line(Document document, String lineNumber, String unitGross, String totalGross, String unitInputPrice, String unitOriginalPrice, String unitMasterPrice, String code, String model, String quality, String color, String size, ProductType productType, int quantity, int sign, int signVoid, String description) {
+        this.document = document;
         this.lineNumber = lineNumber;
         this.unitGross = unitGross;
         this.totalGross = totalGross;
@@ -66,14 +83,26 @@ public class Line {
         this.unitOriginalPrice = unitOriginalPrice;
         this.unitMasterPrice = unitMasterPrice;
         this.code = code;
-        this.idProductType = idProductType;
         this.model = model;
         this.quality = quality;
         this.color = color;
         this.size = size;
+        this.productType = productType;
+        this.quantity = quantity;
+        this.sign = sign;
+        this.signVoid = signVoid;
+        this.description = description;
     }
 
     public Line() {
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public long getLineId() {
@@ -151,13 +180,13 @@ public class Line {
         this.code = code;
     }
 
-    public String getIdProductType() {
+/*    public String getIdProductType() {
         return idProductType;
     }
 
     public void setIdProductType(String idProductType) {
         this.idProductType = idProductType;
-    }
+    }*/
 
     public String getModel() {
         return model;
@@ -189,6 +218,45 @@ public class Line {
 
     public void setSize(String size) {
         this.size = size;
+    }
+    public long getLine_id() {
+        return line_id;
+    }
+
+    public void setLine_id(long line_id) {
+        this.line_id = line_id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getSign() {
+        return sign;
+    }
+
+    public void setSign(int sign) {
+        this.sign = sign;
+    }
+
+    public int getSignVoid() {
+        return signVoid;
+    }
+
+    public void setSignVoid(int ssignVoid) {
+        this.signVoid = ssignVoid;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

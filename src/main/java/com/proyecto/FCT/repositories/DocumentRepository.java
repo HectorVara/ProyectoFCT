@@ -25,4 +25,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
             "FROM lineas l, product_type p, documents d where l.product_type_id=p.id and d.id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 " +
             "and l.document_id=d.id GROUP by id,description",nativeQuery = true)
     List<ICharges> charges(String idStore, String date);
+    @Query(value="SELECT sum(cast(total_gross as decimal(20,2))*sign*sign_void) from lineas, documents d where id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 and d.id = document_id",nativeQuery = true)
+    double totalCharges(String idStore, String date);
+    @Query(value = "SELECT CAST(sum(cast(unit_amount as decimal(20,2))*sign)AS DECIMAL(20,2)) from payments p, documents d where id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 and d.id = document_id and d.document_type_id > 4", nativeQuery = true)
+    double totalPayments(String idStore, String date);
 }

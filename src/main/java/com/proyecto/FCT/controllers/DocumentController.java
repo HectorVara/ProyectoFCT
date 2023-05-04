@@ -89,4 +89,24 @@ public Document parseXML(@RequestParam(required = true) String filename){
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     }
+    @GetMapping("/totalPayments")
+    public ResponseEntity<Double> getTotalPayments(@RequestParam String idStore, @RequestParam String date){
+    double total=0;
+    try{
+        total = documentRepository.totalPayments(idStore, date);
+        return new ResponseEntity<>(total,HttpStatus.OK);
+    }catch(Exception e){
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    }
+    @GetMapping("/totalCharges")
+    public ResponseEntity<Double> getTotalCharges(@RequestParam String idStore, @RequestParam String date){
+        double total=0;
+        try{
+            total = documentRepository.totalCharges(idStore, date);
+            return new ResponseEntity<>(total,HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

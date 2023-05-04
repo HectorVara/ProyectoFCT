@@ -6,6 +6,7 @@ import com.proyecto.FCT.models.queryModels.IPayments;
 import com.proyecto.FCT.models.queryModels.ISales;
 import com.proyecto.FCT.repositories.DocumentRepository;
 import com.proyecto.FCT.services.ParserXMLService;
+import com.proyecto.FCT.services.SaveFolderService;
 import com.proyecto.FCT.utils.FileNamesParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,8 @@ public class DocumentController {
 ParserXMLService parserXMLService;
 @Autowired
 DocumentRepository documentRepository;
+@Autowired
+SaveFolderService saveFolderService;
 
 @GetMapping("/xml")
 public Document parseXML(@RequestParam(required = true) String filename){
@@ -36,26 +40,13 @@ public Document parseXML(@RequestParam(required = true) String filename){
 
 }
     @GetMapping("/savefolder")
-    public ResponseEntity<List<String>> getNames(){
-        List<String> fileNames= new ArrayList<>();
-        FileNamesParser parser= new FileNamesParser();
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
-        String saveUrl
-                = "http://localhost:8080/api/v1/xml?filename=";
-        fileNames = parser.getFileNames(path);
-        if(fileNames.size() > 0) {
-
-            for (int i = 0; i < fileNames.size(); i++) {
-
-                Document d = restTemplate.getForObject(saveUrl + fileNames.get(i), Document.class);
-            }
-        }else{
-            fileNames.add("No hay archivos en la carpeta o la ruta es erronea");
+    public ResponseEntity<List<String>> getNames() {
+        try {
+            List<String> fileNames = saveFolderService.saveAllFilesOfFolder();
+            return new ResponseEntity<>(fileNames,HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(fileNames, headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/sales")
@@ -68,6 +59,16 @@ public Document parseXML(@RequestParam(required = true) String filename){
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    }
+    @GetMapping("allsales")
+    public ResponseEntity<List<com.proyecto.FCT.models.persistenceModels.Document>> getAllSales() {
+        List<com.proyecto.FCT.models.persistenceModels.Document> documents = new ArrayList<>();
+        try {
+            documentRepository.findAll().forEach(documents::add);
+            return new ResponseEntity<>(documents, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("/payments")
     public ResponseEntity<List<IPayments>> getPayments(@RequestParam String idStore, @RequestParam String date){

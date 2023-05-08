@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <title>Home</title>
+
+</head>
+<body>
+<div class="menu">
+    <ul>
+        <li class="home"><a href="#">Home</a></li>
+        <li class="about"><a href="documents">Tables</a></li>
+    </ul>
+    <!--<file class="load-button">Upload XML</file>  changed button text -->
+
+</div>
+<div class="content">
+    <h1>Bienvenido al gestor de tickets online</h1>
+
+</div>
+<div>
+    <p>Con el siguiente fromulario puedes cargar un documento XML que selecciones de la ruta C:/XML</p>
+    <form>
+        <label for="myfile" >Archivo XML</label>
+        <input type="file" id="myfile"  name="filename">
+
+    </form><br>
+    <button id="load-one" class="load-button">Load file</button>
+</div>
+<p>Con el siguiente formulario puedes cargar todos los documentos que estén almacenados en la ruta C:/XML</p>
+
+
+<button id="load-all" class="load-button">Load all</button>
+</div>
+<div id="loading" style="visibility: hidden">
+    <img id="loading-image"  src="Loading_icon.gif" alt="Loading..." />
+</div>
+
+</body>
+</html>
+
+
+
+
+
+<script>
+  const btnAll = document.getElementById("load-all"); // obtenemos el botón por su ID
+  const btnOne = document.getElementById("load-one");
+
+btnAll.addEventListener("click", function() { // agregamos un event listener al botón para detectar su click
+  const xhr = new XMLHttpRequest(); // creamos una instancia del objeto XMLHttpRequest
+  let spinner = document.getElementById("loading");
+  spinner.style.visibility = 'visible';
+
+  xhr.open("GET", "http://localhost:8080/api/v1/savefolder"); // establecemos la URL a la que vamos a hacer la petición GET
+
+  xhr.onload = function() { // definimos lo que sucede cuando se completa la petición
+    if (xhr.status === 201) { // comprobamos si el código de respuesta es 200 (OK)
+    spinner.style.visibility = 'hidden'
+      alert("Ficheros almacenados con éxito"); // mostramos una alerta si la respuesta es satisfactoria
+    } else { // si la respuesta no es satisfactoria
+    spinner.style.visibility = 'hidden'
+      alert("Ha habido un error"); // mostramos una alerta con un mensaje de error
+    }
+  };
+
+  xhr.send(); // enviamos la petición GET
+});
+
+btnOne.addEventListener("click", function() { // agregamos un event listener al botón para detectar su click
+  const xhr = new XMLHttpRequest(); // creamos una instancia del objeto XMLHttpRequest
+  let file = document.getElementById("myfile");
+  let fileName = file.files[0].name;
+
+
+  xhr.open("GET", "http://localhost:8080/persistencia/mysql/save?filename="+fileName); // establecemos la URL a la que vamos a hacer la petición GET
+
+  xhr.onload = function() { // definimos lo que sucede cuando se completa la petición
+    if (xhr.status === 201) { // comprobamos si el código de respuesta es 201 (CREATED)
+      alert("Ficheros almacenados con éxito"); // mostramos una alerta si la respuesta es satisfactoria
+    } else { // si la respuesta no es satisfactoria
+      alert("Ha habido un error"); // mostramos una alerta con un mensaje de error
+    }
+  };
+
+  xhr.send(); // enviamos la petición GET
+});
+
+</script>

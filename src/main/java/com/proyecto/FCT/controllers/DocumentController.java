@@ -1,5 +1,6 @@
 package com.proyecto.FCT.controllers;
-
+import com.proyecto.FCT.repositories.PaymentRepository;
+import com.proyecto.FCT.repositories.LineRepository;
 import com.proyecto.FCT.models.parseModels.Document;
 import com.proyecto.FCT.models.queryModels.ICharges;
 import com.proyecto.FCT.models.queryModels.IPayments;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.print.Doc;
@@ -32,13 +30,17 @@ ParserXMLService parserXMLService;
 DocumentRepository documentRepository;
 @Autowired
 SaveFolderService saveFolderService;
+@Autowired
+LineRepository lineRepository;
+@Autowired
+PaymentRepository paymentRepository;
 
-@GetMapping("/xml")
-public Document parseXML(@RequestParam(required = true) String filename){
-    return parserXMLService.parseXMLandSave(filename);
+    @GetMapping("/xml")
+    public Document parseXML(@RequestParam(required = true) String filename){
+        return parserXMLService.parseXMLandSave(filename);
 
 
-}
+    }
     @GetMapping("/savefolder")
     public ResponseEntity<List<String>> getNames() {
         try {
@@ -68,6 +70,17 @@ public Document parseXML(@RequestParam(required = true) String filename){
             return new ResponseEntity<>(documents, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @DeleteMapping("/deleteall")
+    public ResponseEntity<String> deleteAllSales(){
+        try{
+            lineRepository.deleteAll();
+            paymentRepository.deleteAll();
+            documentRepository.deleteAll();
+            return new ResponseEntity<>("Documentos eliminados con éxito",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Ha habido un error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/payments")

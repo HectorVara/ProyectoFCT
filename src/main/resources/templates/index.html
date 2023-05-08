@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Home</title>
 
 </head>
@@ -28,10 +28,14 @@
     </form><br>
     <button id="load-one" class="load-button">Load file</button>
 </div>
-<p>Con el siguiente formulario puedes cargar todos los documentos que estén almacenados en la ruta C:/XML</p>
+<div>
+    <p>Con el siguiente botón puedes cargar todos los documentos que estén almacenados en la ruta C:/XML</p>
 
-
-<button id="load-all" class="load-button">Load all</button>
+    <button id="load-all" class="load-button">Load all</button>
+</div>
+<div>
+    <p>Con el siguiente botoón puedes eliminar todos los documentos almacenados en la base de datos</p>
+    <button id="delete-all" class="load-button">Delete all</button>
 </div>
 <div id="loading" style="visibility: hidden">
     <img id="loading-image"  src="Loading_icon.gif" alt="Loading..." />
@@ -47,10 +51,12 @@
 <script>
   const btnAll = document.getElementById("load-all"); // obtenemos el botón por su ID
   const btnOne = document.getElementById("load-one");
+  const btnDlt = document.getElementById("delete-all");
+  const spinner = document.getElementById("loading");
 
 btnAll.addEventListener("click", function() { // agregamos un event listener al botón para detectar su click
   const xhr = new XMLHttpRequest(); // creamos una instancia del objeto XMLHttpRequest
-  let spinner = document.getElementById("loading");
+
   spinner.style.visibility = 'visible';
 
   xhr.open("GET", "http://localhost:8080/api/v1/savefolder"); // establecemos la URL a la que vamos a hacer la petición GET
@@ -85,6 +91,25 @@ btnOne.addEventListener("click", function() { // agregamos un event listener al 
   };
 
   xhr.send(); // enviamos la petición GET
+});
+btnDlt.addEventListener("click", function() {
+  const xhr = new XMLHttpRequest();
+
+  spinner.style.visibility = 'visible';
+
+  xhr.open("DELETE", "http://localhost:8080/api/v1/deleteall");
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+    spinner.style.visibility = 'hidden'
+      alert("Ficheros eliminados con éxito");
+    } else {
+    spinner.style.visibility = 'hidden'
+      alert("Ha habido un error");
+    }
+  };
+
+  xhr.send();
 });
 
 </script>

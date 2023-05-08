@@ -52,4 +52,6 @@
   ![phpMyAdmin](https://user-images.githubusercontent.com/113421154/236777096-21dfe055-4184-49d9-97c7-f5af8464cc7d.png)
   
 <p>Por último, el proyecto utiliza unas tablas maestras que debemos tener con información. Hay que introducir el siguiente Script SQL: </p>
-[ScriptTablasMaestras.txt](https://github.com/HectorVara/ProyectoFCT/files/11419494/ScriptTablasMaestras.txt)
+[ScriptTablasMaestras.txt](https://github.com/HectorVara/ProyectoFCT/files/11419494/ScriptTablasMaestras.txt)<br>
+Después de esto ya podemos arrancar el proyecto Spring Boot con la configuración que hemos creado e irnos a https://localhost:8080 para empezar a navegar por la página
+

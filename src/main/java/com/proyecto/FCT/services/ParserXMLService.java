@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class ParserXMLService {
     @Autowired
     DocumentRepository documentRepository;
-    private final String path= "C:\\XML";
+    private final String path= "C:\\GestorTickets\\XML";
     DocumentAdapter adapter= new DocumentAdapter();
     public Document parseXMLandSave(String filename){
         String ruta = path + "\\" + filename;

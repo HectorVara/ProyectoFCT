@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class SaveFolderService {
-    private final String path= "C:\\XML";
+    private final String path= "C:\\GestorTickets\\XML";
     public List<String> saveAllFilesOfFolder(){
         List<String> fileNames= new ArrayList<>();
         FileNamesParser parser= new FileNamesParser();

@@ -10,7 +10,7 @@
 <div class="menu">
     <ul>
         <li class="home"><a href="#">Home</a></li>
-        <li class="about"><a href="documents">Tables</a></li>
+        <li class="about"><a href="#">Tables</a></li>
     </ul>
     <!--<file class="load-button">Upload XML</file>  changed button text -->
 
@@ -20,7 +20,7 @@
 
 </div>
 <div>
-    <p>Con el siguiente fromulario puedes cargar un documento XML que selecciones de la ruta C:/XML</p>
+    <p>Con el siguiente fromulario puedes cargar un documento XML que selecciones</p>
     <form>
         <label for="myfile" >Archivo XML</label>
         <input type="file" id="myfile"  name="filename">
@@ -93,23 +93,26 @@ btnOne.addEventListener("click", function() { // agregamos un event listener al 
   xhr.send(); // enviamos la petición GET
 });
 btnDlt.addEventListener("click", function() {
-  const xhr = new XMLHttpRequest();
+var result = confirm("Estás seguro de que deseas eliminar todos los documentos?");
+    if (result) {
+      const xhr = new XMLHttpRequest();
 
-  spinner.style.visibility = 'visible';
+      spinner.style.visibility = 'visible';
 
-  xhr.open("DELETE", "http://localhost:8080/api/v1/deleteall");
+      xhr.open("DELETE", "http://localhost:8080/api/v1/deleteall");
 
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-    spinner.style.visibility = 'hidden'
-      alert("Ficheros eliminados con éxito");
-    } else {
-    spinner.style.visibility = 'hidden'
-      alert("Ha habido un error");
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+        spinner.style.visibility = 'hidden'
+          alert("Ficheros eliminados con éxito");
+        } else {
+        spinner.style.visibility = 'hidden'
+          alert("Ha habido un error");
+        }
+      };
+
+      xhr.send();
     }
-  };
-
-  xhr.send();
 });
 
 </script>

@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class DocumentController {
-    private final String path= "C:\\GestorTickets\\XML";
+    private final String path= "src\\main\\resources\\xml_stores";
 @Autowired
 ParserXMLService parserXMLService;
 @Autowired

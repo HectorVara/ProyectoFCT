@@ -1,4 +1,6 @@
 package com.proyecto.FCT.controllers;
+import com.proyecto.FCT.models.persistenceModels.Line;
+import com.proyecto.FCT.models.persistenceModels.Payment;
 import com.proyecto.FCT.repositories.PaymentRepository;
 import com.proyecto.FCT.repositories.LineRepository;
 import com.proyecto.FCT.models.parseModels.Document;
@@ -124,4 +126,27 @@ PaymentRepository paymentRepository;
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/payments/{id}")
+    public ResponseEntity<List<Payment>> findPaymentById(@PathVariable("id") long id){
+        List<Payment> payments = paymentRepository.findByDocument(id);
+
+
+        return new ResponseEntity<>(payments, HttpStatus.OK);
+
+    }
+    @GetMapping("/lines/{id}")
+    public ResponseEntity<List<Line>> findLineById(@PathVariable("id") long id){
+        List<Line> lines = lineRepository.findByDocument(id);
+
+
+        return new ResponseEntity<>(lines, HttpStatus.OK);
+
+    }
+    @GetMapping("/lines/all")
+    public List<Line> getAllLines(){
+        return lineRepository.findAll();
+    }
 }
+
+

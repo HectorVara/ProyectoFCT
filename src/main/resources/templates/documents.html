@@ -14,12 +14,7 @@
         <li class="tables"><a href="documents">Tables</a></li>
     </ul>
     <!--<file class="load-button">Upload XML</file>  changed button text -->
-    <form>
-        <label for="myfile" >Archivo XML</label>
-        <input type="file" id="myfile"  name="filename">
 
-    </form>
-    <button id="load-one" class="load-button">Load file</button>
 </div>
 
     <div th:action="@{/documents}" class="tiendafecha">
@@ -116,32 +111,8 @@
 </html>
 
 <script>
-const btnDocs = document.getElementById("button-docs");
-btnDocs.addEventListener("click", function(){
-alert("Ficheros almacenados en C:/GestorTickets/Transacciones");
-});
-const btnOne = document.getElementById("load-one");
-btnOne.addEventListener("click", async function(){ // agregamos un event listener al botón para detectar su click
-  const xhr = new XMLHttpRequest(); // creamos una instancia del objeto XMLHttpRequest
-  let file = document.getElementById("myfile");
-  let fileName = file.files[0].name;
 
-
-  xhr.open("GET", "http://localhost:8080/persistencia/mysql/save?filename="+fileName); // establecemos la URL a la que vamos a hacer la petición GET
-
-  xhr.onload = function() { // definimos lo que sucede cuando se completa la petición
-    if (xhr.status === 201) { // comprobamos si el código de respuesta es 201 (CREATED)
-      alert("Ficheros almacenados con éxito"); // mostramos una alerta si la respuesta es satisfactoria
-    } else { // si la respuesta no es satisfactoria
-      alert("Ha habido un error"); // mostramos una alerta con un mensaje de error
-    }
-  };
-
-  xhr.send(); // enviamos la petición GET
-  window.location.reload();
-});
-
-
+//Función para generar dos tablas, una con las lineas de productos y otra con los pagos de cada documento
 function generateTables(jsonLines,jsonPayments) {
 
 
@@ -276,8 +247,8 @@ function(row)
 return async function() {
 var cell = row.getElementsByTagName("td")[0];
 var id = BigInt(cell.innerHTML);
-const url_lines = '/persistencia/mysql/lines/'+id
-const url_payments = '/persistencia/mysql/payments/'+id
+const url_lines = '/api/v1/lines/'+id
+const url_payments = '/api/v1/payments/'+id
 response_lines = await fetch(url_lines)
 console.log(response_lines)
 var lines = await response_lines.json();

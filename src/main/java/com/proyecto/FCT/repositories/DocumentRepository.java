@@ -1,10 +1,7 @@
 package com.proyecto.FCT.repositories;
 
 import com.proyecto.FCT.models.persistenceModels.Document;
-import com.proyecto.FCT.models.queryModels.ICharges;
-import com.proyecto.FCT.models.queryModels.ICobros;
-import com.proyecto.FCT.models.queryModels.IPayments;
-import com.proyecto.FCT.models.queryModels.ISales;
+import com.proyecto.FCT.models.queryModels.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -38,5 +35,6 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<ICobros> cobros(String idStore, String date);
     @Query(value="SELECT sum(cast(total_gross as decimal(20,2))*sign*sign_void) from lineas, documents d where id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 and d.id = document_id",nativeQuery = true)
     double totalCobros(String idStore, String date);
+
 
 }

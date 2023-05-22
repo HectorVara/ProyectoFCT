@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <title>Resumen</title>
+</head>
+<body>
+<div class="tiendafecha">
+  <p class="encabezadoResumen">Tienda: <span th:text="${tiendaFecha[0]}"></span></p>
+  <p class="encabezadoResumen">Fecha: <span th:text="${tiendaFecha[1]}"></span></p>
+</div>
+<div class="menu">
+  <ul>
+    <li class="home"><a href="http://localhost:8080">Home</a></li>
+    <li class="about"><a href="documents">Tables</a></li>
+  </ul>
+  <!--<file class="load-button">Upload XML</file>  changed button text -->
+  <form>
+    <label for="myfile" >Archivo XML</label>
+    <input type="file" id="myfile"  name="filename">
+
+  </form>
+  <button id="load-one" class="load-button">Load file</button>
+</div>
+
+<div>
+  <table class="styled-table"  align="center" >
+    <thead>
+    <tr>
+
+      <th>Id</th>
+      <th> Descripción </th>
+      <th> Total Documentos </th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${sales.empty}">
+      <td colspan="2"> No Sales Available </td>
+    </tr>
+    <tr align="center" th:each="sale : ${sales}" >
+
+      <td><span th:text="${sale.id}"> Id  </span></td>
+      <td><span th:text="${sale.description}"> Descripción  </span></td>
+      <td><span th:text="${sale.total}"> Total Documentos </span></td>
+
+    </tr>
+    </tbody>
+  </table>
+
+  <br><br>
+
+
+  <table class="styled-table"  align="center" >
+    <thead>
+    <tr>
+
+      <th>Id</th>
+      <th> Descripción </th>
+      <th> Total</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${cobros.empty}">
+      <td colspan="2"> No Sales Available </td>
+    </tr>
+    <tr align="center" th:each="cobro : ${cobros}">
+      <td><span th:text="${cobro.id}"> Id </span></td>
+      <td><span th:text="${cobro.description}"> Descripción  </span></td>
+      <td><span th:text="${cobro.total}"> Total </span></td>
+
+
+    </tr>
+    <tr>
+      <td colspan="2">Total</td>
+      <td ><span style="color:#FF0000" th:text="${totalCobro}">Total</span></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <br><br>
+
+
+  <table class="styled-table"  align="center">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th> Descripción </th>
+      <th> Total </th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${payments.empty}">
+      <td colspan="2"> No Payments Available </td>
+    </tr>
+    <tr align="center" th:each="pay : ${payments}">
+      <td><span th:text="${pay.id}"> Id</span></td>
+      <td><span th:text="${pay.description}"> Descripción  </span></td>
+      <td><span th:text="${pay.total}"> Total</span></td>
+
+    </tr>
+    <tr>
+      <td colspan="2">Total</td>
+      <td ><span style="color:#FF0000" th:text="${totalPayment}">Total</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div th:with="result=${totalCobro - totalPayment}">
+
+  <p align="center">DIFERENCIA COBROS - PAGOS: <span style="color:#FF0000" th:text="${#numbers.formatDecimal(result, 1, 'DEFAULT', 2, 'DEFAULT')}"></span></p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tables</title>
+    <meta charset="UTF-8"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+<div class="menu">
+    <ul>
+        <li class="home"><a href="http://localhost:8080">Home</a></li>
+        <li class="tables"><a href="documents">Tables</a></li>
+    </ul>
+    <!--<file class="load-button">Upload XML</file>  changed button text -->
+    <form>
+        <label for="myfile" >Archivo XML</label>
+        <input type="file" id="myfile"  name="filename">
+
+    </form>
+    <button id="load-one" class="load-button">Load file</button>
+</div>
+
+    <div th:action="@{/documents}" class="tiendafecha">
+        <form id="fechatienda">
+            <label for="text-input">Enter Store:</label>
+            <input type="text" th:name="idStore" id="text-input" name="text-input"><br>
+
+            <label for="date-input">Enter date:</label>
+            <input type="date" th:name="date" id="date-input" name="date-input" min="2023-01-01" max="2023-12-31" required><br>
+
+            <input type="submit"  value="Submit">
+        </form>
+    </div>
+
+
+
+<div class="general">
+    <div id="mainTable">
+        <table class="styled-table" id="tableId" >
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th> uid </th>
+                    <th> Store </th>
+                    <th>Caja </th>
+                    <th> Session  </th>
+                    <th> Date </th>
+                    <th> Operation </th>
+                    <th> Shop Assistant </th>
+                    <th> Descripción </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:if="${documents.empty}">
+                    <td colspan="2"> No Documents Available </td>
+                </tr>
+                <tr align="center" th:each="document : ${documents}">
+                    <td th:text="${document.id}">id </td>
+                    <td><span th:text="${document.uid}"> uid </span></td>
+                    <td><span th:text="${document.idStore}"> id Store  </span></td>
+                    <td><span th:text="${document.idWorkstation}"> id Workstation </span></td>
+                    <td><span th:text="${document.sessionDate}"> Session Date </span></td>
+                    <td><span th:text="${document.date}"> Ticket Date </span></td>
+                    <td><span th:text="${document.operationNumber}"> Operation Number  </span></td>
+                    <td><span th:text="${document.idOperator}"> Id Operator </span></td>
+                    <td><span th:text="${document.documentType.description}">Descripción</span></td>
+
+
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+    <div id="mainFooter">
+        <footer style="font-size: large" class="pagination">
+
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{'/documents/page/' + ${i}}">[[${i}]]</a>
+        &nbsp; &nbsp;
+            </span>
+        </footer>
+    </div>
+
+</div>
+
+
+<br><br>
+<div id="container"></div>
+<br><br>
+<div id="container2"></div>
+<br><br>
+<div>
+
+    <form th:if="${!documents.empty}" class="botonesResumen" th:action="@{/resumen}">
+        <input hidden type="text" th:value="${documents[0].idStore}" name="idStore"/>
+        <input hidden type="text" th:value="${#strings.substring(documents[0].sessionDate,0,10)}" name="date"/>
+        <button class="load-button" type="submit" >Resumen de ventas</button>
+
+    </form>
+    <form th:if="${!documents.empty}" class="botonesResumen" th:action="@{/generateDocuments}">
+        <input hidden type="text" th:value="${documents[0].idStore}" name="idStore"/>
+        <input hidden type="text" th:value="${#strings.substring(documents[0].sessionDate,0,10)}" name="date"/>
+        <button id="button-docs" class="load-button" type="submit" >Generar transacciones contables</button>
+
+    </form>
+</div>
+
+
+</body>
+</html>
+
+<script>
+const btnDocs = document.getElementById("button-docs");
+btnDocs.addEventListener("click", function(){
+alert("Ficheros almacenados en C:/GestorTickets/Transacciones");
+});
+const btnOne = document.getElementById("load-one");
+btnOne.addEventListener("click", async function(){ // agregamos un event listener al botón para detectar su click
+  const xhr = new XMLHttpRequest(); // creamos una instancia del objeto XMLHttpRequest
+  let file = document.getElementById("myfile");
+  let fileName = file.files[0].name;
+
+
+  xhr.open("GET", "http://localhost:8080/persistencia/mysql/save?filename="+fileName); // establecemos la URL a la que vamos a hacer la petición GET
+
+  xhr.onload = function() { // definimos lo que sucede cuando se completa la petición
+    if (xhr.status === 201) { // comprobamos si el código de respuesta es 201 (CREATED)
+      alert("Ficheros almacenados con éxito"); // mostramos una alerta si la respuesta es satisfactoria
+    } else { // si la respuesta no es satisfactoria
+      alert("Ha habido un error"); // mostramos una alerta con un mensaje de error
+    }
+  };
+
+  xhr.send(); // enviamos la petición GET
+  window.location.reload();
+});
+
+
+function generateTables(jsonLines,jsonPayments) {
+
+
+
+    // Get the container element where the table will be inserted
+    let container = document.getElementById("container");
+    container.replaceChildren();
+if(Object.keys(jsonLines).length !== 0){
+    // Create the table element
+    let tableLines = document.createElement("table");
+
+    // Get the keys (column names) of the first object in the JSON data
+    let cols = Object.keys(jsonLines[0]);
+
+    // Create the header element
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    tr.setAttribute("bgcolor","gray");
+
+    // Loop through the column names and create header cells
+    cols.forEach((item) => {
+       let th = document.createElement("th");
+       if(item==='productType'){
+       th.innerText = 'Descripción';
+       }else{
+       th.innerText = item; // Set the column name as the text of the header cell
+       }
+
+       tr.appendChild(th); // Append the header cell to the header row
+    });
+    thead.appendChild(tr); // Append the header row to the header
+    tableLines.append(tr) // Append the header to the table
+
+    // Loop through the JSON data and create table rows
+    jsonLines.forEach((item) => {
+       let tr = document.createElement("tr");
+
+       // Get the values of the current object in the JSON data
+       let vals = Object.values(item);
+
+       // Loop through the values and create table cells
+         for(var i=0;i<vals.length;i++){
+
+          let td = document.createElement("td");
+            if(i===12){
+            td.innerText = vals[i].description;
+            }else{
+            td.innerText = vals[i];
+        }
+
+          tr.appendChild(td); // Append the table cell to the table row
+       }
+       tableLines.appendChild(tr); // Append the table row to the table
+       tableLines.setAttribute("border", "1");
+       tableLines.setAttribute("class", "styled-table");
+       tableLines.setAttribute("bgcolor", "pink");
+    });
+    container.appendChild(tableLines) // Append the table to the container element
+
+  }
+
+
+
+     // Get the container element where the table will be inserted
+    let container2 = document.getElementById("container2");
+    container2.replaceChildren();
+if(Object.keys(jsonPayments).length !== 0){
+    // Create the table element
+    let tablePayments = document.createElement("table");
+
+    // Get the keys (column names) of the first object in the JSON data
+    let cols2 = Object.keys(jsonPayments[0]);
+    // Create the header element
+    let thead2 = document.createElement("thead");
+    let tr2 = document.createElement("tr");
+    tr2.setAttribute("bgcolor","gray");
+
+    // Loop through the column names and create header cells
+    cols2.forEach((item) => {
+       let th2 = document.createElement("th");
+       if(item==='paymentMedia'){
+       th2.innerText = 'Descripción';
+       }else{
+       th2.innerText = item; // Set the column name as the text of the header cell
+       }
+       tr2.appendChild(th2); // Append the header cell to the header row
+    });
+    thead2.appendChild(tr2); // Append the header row to the header
+    tablePayments.append(tr2) // Append the header to the table
+
+    // Loop through the JSON data and create table rows
+    jsonPayments.forEach((item) => {
+       let tr2 = document.createElement("tr");
+
+       // Get the values of the current object in the JSON data
+       let vals2 = Object.values(item);
+
+
+       // Loop through the values and create table cells
+
+       for(var i=0;i<vals2.length;i++){
+
+          let td2 = document.createElement("td");
+          if(i===6){
+            td2.innerText = vals2[i].description;
+
+
+
+            }else{
+            td2.innerText = vals2[i];
+        }
+          // Set the value as the text of the table cell
+          tr2.appendChild(td2); // Append the table cell to the table row
+       }
+       tablePayments.appendChild(tr2); // Append the table row to the table
+        tablePayments.setAttribute("border", "1");
+
+       tablePayments.setAttribute("bgcolor", "yellow");
+       tablePayments.setAttribute("class", "styled-table");
+    });
+    container2.appendChild(tablePayments) // Append the table to the container element
+   }
+ }
+function addRowHandlers() {
+var table = document.getElementById("tableId");
+var rows = table.getElementsByTagName("tr");
+for (i = 0; i < rows.length; i++) {
+var currentRow = table.rows[i];
+var createClickHandler =
+function(row)
+{
+return async function() {
+var cell = row.getElementsByTagName("td")[0];
+var id = BigInt(cell.innerHTML);
+const url_lines = '/persistencia/mysql/lines/'+id
+const url_payments = '/persistencia/mysql/payments/'+id
+response_lines = await fetch(url_lines)
+console.log(response_lines)
+var lines = await response_lines.json();
+response_payments = await fetch(url_payments)
+console.log(response_payments)
+var payments = await response_payments.json();
+
+
+generateTables(lines,payments);
+
+};
+};
+
+currentRow.onclick = createClickHandler(currentRow);
+}
+}
+window.onload = addRowHandlers();
+</script>

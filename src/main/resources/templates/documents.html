@@ -64,8 +64,6 @@
                     <td><span th:text="${document.operationNumber}"> Operation Number  </span></td>
                     <td><span th:text="${document.idOperator}"> Id Operator </span></td>
                     <td><span th:text="${document.documentType.description}">Descripción</span></td>
-
-
                 </tr>
 
             </tbody>
@@ -115,127 +113,96 @@
 //Función para generar dos tablas, una con las lineas de productos y otra con los pagos de cada documento
 function generateTables(jsonLines,jsonPayments) {
 
+  let container = document.getElementById("container");
+  container.replaceChildren();
 
-
-    // Get the container element where the table will be inserted
-    let container = document.getElementById("container");
-    container.replaceChildren();
 if(Object.keys(jsonLines).length !== 0){
-    // Create the table element
-    let tableLines = document.createElement("table");
+  let tableLines = document.createElement("table");
+  let cols = Object.keys(jsonLines[0]);
+  let thead = document.createElement("thead");
+  let tr = document.createElement("tr");
+  tr.setAttribute("bgcolor","gray");
 
-    // Get the keys (column names) of the first object in the JSON data
-    let cols = Object.keys(jsonLines[0]);
+  cols.forEach((item) => {
+     let th = document.createElement("th");
+     if(item==='productType'){
+     th.innerText = 'Descripción';
+     }else{
+     th.innerText = item;
+     }
 
-    // Create the header element
-    let thead = document.createElement("thead");
-    let tr = document.createElement("tr");
-    tr.setAttribute("bgcolor","gray");
+     tr.appendChild(th);
+  });
+  thead.appendChild(tr);
+  tableLines.append(tr)
 
-    // Loop through the column names and create header cells
-    cols.forEach((item) => {
-       let th = document.createElement("th");
-       if(item==='productType'){
-       th.innerText = 'Descripción';
-       }else{
-       th.innerText = item; // Set the column name as the text of the header cell
-       }
+  jsonLines.forEach((item) => {
+     let tr = document.createElement("tr");
+     let vals = Object.values(item);
+       for(var i=0;i<vals.length;i++){
+        let td = document.createElement("td");
+        //En la posición 12, hay un objeto Json del que solo queremos la descripción. El resto soon texto.
+          if(i===12){
+          td.innerText = vals[i].description;
+          }else{
+          td.innerText = vals[i];
+      }
+        tr.appendChild(td);
+     }
+     tableLines.appendChild(tr);
+     tableLines.setAttribute("border", "1");
+     tableLines.setAttribute("class", "styled-table");
+     tableLines.setAttribute("bgcolor", "pink");
+  });
+  container.appendChild(tableLines)
 
-       tr.appendChild(th); // Append the header cell to the header row
-    });
-    thead.appendChild(tr); // Append the header row to the header
-    tableLines.append(tr) // Append the header to the table
-
-    // Loop through the JSON data and create table rows
-    jsonLines.forEach((item) => {
-       let tr = document.createElement("tr");
-
-       // Get the values of the current object in the JSON data
-       let vals = Object.values(item);
-
-       // Loop through the values and create table cells
-         for(var i=0;i<vals.length;i++){
-
-          let td = document.createElement("td");
-            if(i===12){
-            td.innerText = vals[i].description;
-            }else{
-            td.innerText = vals[i];
-        }
-
-          tr.appendChild(td); // Append the table cell to the table row
-       }
-       tableLines.appendChild(tr); // Append the table row to the table
-       tableLines.setAttribute("border", "1");
-       tableLines.setAttribute("class", "styled-table");
-       tableLines.setAttribute("bgcolor", "pink");
-    });
-    container.appendChild(tableLines) // Append the table to the container element
-
-  }
+}
 
 
 
-     // Get the container element where the table will be inserted
-    let container2 = document.getElementById("container2");
-    container2.replaceChildren();
+     let container2 = document.getElementById("container2");
+container2.replaceChildren();
 if(Object.keys(jsonPayments).length !== 0){
-    // Create the table element
-    let tablePayments = document.createElement("table");
+let tablePayments = document.createElement("table");
+let cols2 = Object.keys(jsonPayments[0]);
+let thead2 = document.createElement("thead");
+let tr2 = document.createElement("tr");
+tr2.setAttribute("bgcolor","gray");
 
-    // Get the keys (column names) of the first object in the JSON data
-    let cols2 = Object.keys(jsonPayments[0]);
-    // Create the header element
-    let thead2 = document.createElement("thead");
-    let tr2 = document.createElement("tr");
-    tr2.setAttribute("bgcolor","gray");
-
-    // Loop through the column names and create header cells
-    cols2.forEach((item) => {
-       let th2 = document.createElement("th");
-       if(item==='paymentMedia'){
-       th2.innerText = 'Descripción';
-       }else{
-       th2.innerText = item; // Set the column name as the text of the header cell
-       }
-       tr2.appendChild(th2); // Append the header cell to the header row
-    });
-    thead2.appendChild(tr2); // Append the header row to the header
-    tablePayments.append(tr2) // Append the header to the table
-
-    // Loop through the JSON data and create table rows
-    jsonPayments.forEach((item) => {
-       let tr2 = document.createElement("tr");
-
-       // Get the values of the current object in the JSON data
-       let vals2 = Object.values(item);
-
-
-       // Loop through the values and create table cells
-
-       for(var i=0;i<vals2.length;i++){
-
-          let td2 = document.createElement("td");
-          if(i===6){
-            td2.innerText = vals2[i].description;
-
-
-
-            }else{
-            td2.innerText = vals2[i];
-        }
-          // Set the value as the text of the table cell
-          tr2.appendChild(td2); // Append the table cell to the table row
-       }
-       tablePayments.appendChild(tr2); // Append the table row to the table
-        tablePayments.setAttribute("border", "1");
-
-       tablePayments.setAttribute("bgcolor", "yellow");
-       tablePayments.setAttribute("class", "styled-table");
-    });
-    container2.appendChild(tablePayments) // Append the table to the container element
+cols2.forEach((item) => {
+   let th2 = document.createElement("th");
+   if(item==='paymentMedia'){
+   th2.innerText = 'Descripción';
+   }else{
+   th2.innerText = item;
    }
- }
+   tr2.appendChild(th2);
+});
+thead2.appendChild(tr2);
+tablePayments.append(tr2)
+
+jsonPayments.forEach((item) => {
+   let tr2 = document.createElement("tr");
+   let vals2 = Object.values(item);
+
+   for(var i=0;i<vals2.length;i++){
+      let td2 = document.createElement("td");
+      //En la posición 6 hay un objeto Json del que queremos la descripción, el resto son texto
+      if(i===6){
+        td2.innerText = vals2[i].description;
+        }else{
+        td2.innerText = vals2[i];
+    }
+      tr2.appendChild(td2);
+   }
+   tablePayments.appendChild(tr2);
+   tablePayments.setAttribute("border", "1");
+   tablePayments.setAttribute("bgcolor", "yellow");
+   tablePayments.setAttribute("class", "styled-table");
+});
+container2.appendChild(tablePayments)
+}
+}
 function addRowHandlers() {
 var table = document.getElementById("tableId");
 var rows = table.getElementsByTagName("tr");

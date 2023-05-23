@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name="documents")
 public class Document {
-    //Id, Uid, IdStore, IdWorkstation, SessionDate, Date, OperationNumber, IdDocumentType, IdOperator
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")

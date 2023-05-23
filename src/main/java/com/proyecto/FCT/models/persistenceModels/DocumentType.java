@@ -9,9 +9,7 @@ import jakarta.persistence.Table;
 public class DocumentType {
     @Id
     private int id;
-
     private String description;
-
     public DocumentType(int id) {
         this.id = id;
     }

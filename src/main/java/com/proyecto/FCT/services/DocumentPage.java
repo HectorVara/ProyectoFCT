@@ -24,10 +24,6 @@ public class DocumentPage {
         return documentRepository.findAll(pageable);
     }
 
-  /*   public Page<Document> findPageByStoreAndDate(int pageNumber, String idStore, String date){
-        Pageable pageable = PageRequest.of(pageNumber - 1,10);
-        return documentRepository.findByIdStoreAndSessionDate(pageable, idStore, date);
-    }*/
 
     public Page<Document> findPageByStoreAndDate(Pageable pageable, String idStore, String date){
 

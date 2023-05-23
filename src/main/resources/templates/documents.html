@@ -110,6 +110,11 @@
 
 <script>
 
+const btnDocs = document.getElementById("button-docs");
+btnDocs.addEventListener("click", function() {
+alert("Documentos creados en src/resources/reports");
+});
+
 //Función para generar dos tablas, una con las lineas de productos y otra con los pagos de cada documento
 function generateTables(jsonLines,jsonPayments) {
 

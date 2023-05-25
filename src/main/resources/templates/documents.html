@@ -35,36 +35,40 @@
     <div id="mainTable">
         <table class="styled-table" id="tableId" >
             <thead>
-                <tr>
-                    <th>id</th>
-                    <th> uid </th>
-                    <th> Store </th>
-                    <th>Caja </th>
-                    <th> Session  </th>
-                    <th> Date </th>
-                    <th> Operation </th>
-                    <th> Shop Assistant </th>
-                    <th> Descripción </th>
+            <tr>
+                <th>Pdf</th>
+                <th>id</th>
+                <th> uid </th>
+                <th> Store </th>
+                <th>Caja </th>
+                <th> Session  </th>
+                <th> Date </th>
+                <th> Operation </th>
+                <th> Shop Assistant </th>
+                <th> Descripción </th>
 
 
-                </tr>
+            </tr>
             </thead>
             <tbody>
 
-                <tr th:if="${documents.empty}">
-                    <td colspan="2"> No Documents Available </td>
-                </tr>
-                <tr align="center" th:each="document : ${documents}">
-                    <td th:text="${document.id}">id </td>
-                    <td><span th:text="${document.uid}"> uid </span></td>
-                    <td><span th:text="${document.idStore}"> id Store  </span></td>
-                    <td><span th:text="${document.idWorkstation}"> id Workstation </span></td>
-                    <td><span th:text="${document.sessionDate}"> Session Date </span></td>
-                    <td><span th:text="${document.date}"> Ticket Date </span></td>
-                    <td><span th:text="${document.operationNumber}"> Operation Number  </span></td>
-                    <td><span th:text="${document.idOperator}"> Id Operator </span></td>
-                    <td><span th:text="${document.documentType.description}">Descripción</span></td>
-                </tr>
+            <tr th:if="${documents.empty}">
+                <td colspan="2"> No Documents Available </td>
+            </tr>
+            <tr align="center" th:each="document : ${documents}">
+                <td><img id="pdf-icon" src="https://pcforms.com/images/thumbs/20_20/icons/pdf-icon.jpg"></img></td>
+                <td th:text="${document.id}">id </td>
+                <td><span th:text="${document.uid}"> uid </span></td>
+                <td><span th:text="${document.idStore}"> id Store  </span></td>
+                <td><span th:text="${document.idWorkstation}"> id Workstation </span></td>
+                <td><span th:text="${document.sessionDate}"> Session Date </span></td>
+                <td><span th:text="${document.date}"> Ticket Date </span></td>
+                <td><span th:text="${document.operationNumber}"> Operation Number  </span></td>
+                <td><span th:text="${document.idOperator}"> Id Operator </span></td>
+                <td><span th:text="${document.documentType.description}">Descripción</span></td>
+
+
+            </tr>
 
             </tbody>
 
@@ -238,4 +242,35 @@ currentRow.onclick = createClickHandler(currentRow);
 }
 }
 window.onload = addRowHandlers();
+
+//Para abrir el PDF de cada documento al pulsar en el icono
+const icono = document.getElementById('pdf-icon');
+icono.addEventListener('click', abrirPDF);
+
+function abrirPDF() {
+  fetch('/jasper/pdfinbytes')
+    .then(response => response.arrayBuffer())
+    .then(arrayBuffer => {
+      var file = new Blob([arrayBuffer], { type: 'application/pdf' });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+});
+}
+
+// Obtén todas las imágenes de la primera columna de la tabla
+var imagenes = document.querySelectorAll('table td:first-child img');
+
+// Recorre todas las imágenes y añade un evento de click a cada una
+for (var i = 0; i < imagenes.length; i++) {
+  imagenes[i].addEventListener('click', function() {
+    // Obtén el id de la segunda columna de la fila actual
+    var id = this.parentNode.nextElementSibling.textContent;
+
+
+    fetch('/jasper/pdf/' + id)
+      .then(abrirPDF)
+
+
+  });
+}
 </script>

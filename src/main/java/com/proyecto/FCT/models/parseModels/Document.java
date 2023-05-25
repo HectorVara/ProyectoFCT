@@ -32,6 +32,8 @@ public class Document {
     private ListDocumentLine lines;
     @XmlElement(name = "ListDocumentPayment")
     private ListDocumentPayment payments;
+    @XmlElement(name="ListDocumentPrintBuffer")
+    private ListDocumentPrintBuffer printBuffer;
 
 
 
@@ -49,6 +51,20 @@ public class Document {
         this.idOperator = idOperator;
         this.lines = lines;
         this.payments = payments;
+    }
+
+    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, String idDocumentType, String idOperator, ListDocumentLine lines, ListDocumentPayment payments, ListDocumentPrintBuffer printBuffer) {
+        this.uid = uid;
+        this.idStore = idStore;
+        this.idWorkstation = idWorkstation;
+        this.sessionDate = sessionDate;
+        this.date = date;
+        this.operationNumber = operationNumber;
+        this.idDocumentType = idDocumentType;
+        this.idOperator = idOperator;
+        this.lines = lines;
+        this.payments = payments;
+        this.printBuffer = printBuffer;
     }
 
     public String getUid() {
@@ -129,5 +145,13 @@ public class Document {
 
     public void setPayments(ListDocumentPayment payments) {
         this.payments = payments;
+    }
+
+    public ListDocumentPrintBuffer getPrintBuffer() {
+        return printBuffer;
+    }
+
+    public void setPrintBuffer(ListDocumentPrintBuffer printBuffer) {
+        this.printBuffer = printBuffer;
     }
 }

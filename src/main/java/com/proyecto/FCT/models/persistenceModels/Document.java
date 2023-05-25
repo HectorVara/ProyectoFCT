@@ -38,6 +38,8 @@ public class Document {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="document_type_id", referencedColumnName = "id")
     private DocumentType documentType;
+    @OneToMany(mappedBy = "document",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<EncodedData> encodedData;
 
 
     public Document(long id, String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, DocumentType documentType, String idOperator) {
@@ -51,6 +53,7 @@ public class Document {
         this.documentType = documentType;
         this.idOperator = idOperator;
 
+
     }
 
     public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber,DocumentType documentType, String idOperator) {
@@ -63,9 +66,10 @@ public class Document {
         this.documentType = documentType;
         this.idOperator = idOperator;
 
+
     }
 
-    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, DocumentType documentType, String idOperator, List<Line> lines,List<Payment> payments) {
+    public Document(String uid, String idStore, String idWorkstation, Date sessionDate, Date date, String operationNumber, DocumentType documentType, String idOperator, List<Line> lines,List<Payment> payments,List<EncodedData> encodedData) {
         this.uid = uid;
         this.idStore = idStore;
         this.idWorkstation = idWorkstation;
@@ -76,6 +80,8 @@ public class Document {
         this.idOperator = idOperator;
         this.lines = lines;
         this.payments = payments;
+        this.encodedData = encodedData;
+
     }
 
     public Document() {
@@ -170,5 +176,13 @@ public class Document {
 
     public void setDocumentType(DocumentType documentType) {
         this.documentType = documentType;
+    }
+
+    public List<EncodedData> getEncodedData() {
+        return encodedData;
+    }
+
+    public void setEncodedData(List<EncodedData> encodedData) {
+        this.encodedData = encodedData;
     }
 }

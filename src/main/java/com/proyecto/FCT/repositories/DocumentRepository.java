@@ -35,6 +35,7 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<ICobros> cobros(String idStore, String date);
     @Query(value="SELECT sum(cast(total_gross as decimal(20,2))*sign*sign_void) from lineas, documents d where id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 and d.id = document_id",nativeQuery = true)
     double totalCobros(String idStore, String date);
-
+    @Query(value = "SELECT ED.DATA FROM ENCODED_DATA ED INNER JOIN DOCUMENTS D ON D.ID = ED.DOCUMENT_ID WHERE D.ID = ?1", nativeQuery = true)
+    List<String> getEncodedData(long id);
 
 }

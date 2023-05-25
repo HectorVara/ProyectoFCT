@@ -16,6 +16,7 @@ public class DocumentAdapter {
         //Para transferir las listas es necesario recorrerlas y pasar los datos de cada atributo usando getters y setters
         List<Line> lines= new ArrayList<>();
         List<Payment> payments= new ArrayList<>();
+        List<EncodedData> encodedData = new ArrayList<>();
         if(t.getData().getDocument().getLines()!=null) {
 
             for (int i = 0; i < t.getData().getDocument().getLines().getLines().size(); i++) {
@@ -64,8 +65,18 @@ public class DocumentAdapter {
             d.setPayments(payments);
 
         }
+        if(t.getData().getDocument().getPrintBuffer()!=null){
+            for (int i=0;i<t.getData().getDocument().getPrintBuffer().getDocumentPrintBuffers().size();i++){
+                EncodedData ed = new EncodedData();
+                ed.setData(t.getData().getDocument().getPrintBuffer().getDocumentPrintBuffers().get(i).getData());
+                ed.setDocument(d);
+                encodedData.add(ed);
+            }
+            d.setEncodedData(encodedData);
+        }
 
 
         return d;
     }
 }
+

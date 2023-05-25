@@ -42,7 +42,8 @@ public class JasperService {
 
         return getPdfToBytes();
     }
-
+    //Este método forma el objeto ticket. Según las etiquetas que contiene cada linea vamos identificando las partes
+    //del ticket y las metemos en su atributo correspondiente.
     public Ticket getTicket(List<String> decodedPrintBuffer) {
         Ticket ticket = new Ticket();
         String header = "";
@@ -76,7 +77,6 @@ public class JasperService {
 
                 } while (i<lines.size());
 
-
             }else if(lines.get(i).contains("<span attr=\"b\"")) {
                 footer += removeTagsButNoSpaces(lines.get(i)) +"\n";
             }else if(lines.get(i).contains("<logo>base64")){
@@ -93,18 +93,19 @@ public class JasperService {
         ticket.setFooter(footer);
         ticket.setSummary(summary);
 
-        System.out.println("-------------------HEADER---------------\n" + header);
+     /*   System.out.println("-------------------HEADER---------------\n" + header);
         System.out.println("-----------------BODY----------------\n" + body);
         System.out.println("-----------------COL-FOOTER----------------\n"+col_footer);
         System.out.println("-----------------FOOTER----------------\n" + footer);
-        System.out.println("-----------------SUMMARY----------------\n" + summary);
+        System.out.println("-----------------SUMMARY----------------\n" + summary);*/
 
         return ticket;
     }
-
+    //El método removeTags elimina las etiquetas utilizando la librería Jsoup, pero también me eliminaba los espacios
     public String removeTags(String html){
         return Jsoup.parse(html).text();
     }
+    //Con el siguiente método elimino las etiquetas pero dejo los espacios
     public String removeTagsButNoSpaces(String line){
         String newLine="";
         for(int i=0;i<line.length();i++){
@@ -119,7 +120,7 @@ public class JasperService {
         }
         return newLine;
     }
-
+    //Convierte el PDF en bytes para enviarlo al frontend
     public byte[] getPdfToBytes(){
         Path pdfPath = Paths.get("src\\main\\resources\\jasper\\reports\\ticket1.pdf");
         byte[] pdf=null;
@@ -130,6 +131,7 @@ public class JasperService {
         }
         return pdf;
     }
+    //En este caso solo tenemos dos logos, dependiendo lo que venga en el header del ticket elegimos uno u otro
     public String getLogo(String header){
         String logoPath = "\\src\\main\\resources\\jasper\\images";
 

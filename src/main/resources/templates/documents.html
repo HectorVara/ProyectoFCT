@@ -162,6 +162,7 @@ if(Object.keys(jsonLines).length !== 0){
      tableLines.setAttribute("border", "1");
      tableLines.setAttribute("class", "styled-table");
      tableLines.setAttribute("bgcolor", "pink");
+     tableLines.setAttribute("width", "80%");
   });
   container.appendChild(tableLines)
 
@@ -221,7 +222,7 @@ var createClickHandler =
 function(row)
 {
 return async function() {
-var cell = row.getElementsByTagName("td")[0];
+var cell = row.getElementsByTagName("td")[1];
 var id = BigInt(cell.innerHTML);
 const url_lines = '/api/v1/lines/'+id
 const url_payments = '/api/v1/payments/'+id

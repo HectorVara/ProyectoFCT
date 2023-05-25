@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticket1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="3655867c-b77f-4d09-b523-c9553d514770">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="body" class="java.lang.String"/>
+	<parameter name="summary" class="java.lang.String"/>
+	<parameter name="col_footer" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.Object"/>
+	<parameter name="footer" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="53">
+			<image onErrorType="Blank">
+				<reportElement x="154" y="0" width="269" height="40" uuid="a60a2270-f64e-4387-9e09-1b95e3e4896a"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement x="154" y="0" width="296" height="60" uuid="c5006b51-6ffe-4afe-8abd-3a7bcb65d1ab"/>
+				<textElement textAlignment="Left">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{body}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="12">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="154" y="0" width="296" height="11" uuid="3bbc1c97-2b04-4b1a-8f7c-4c4172f564cc"/>
+				<textElement>
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{footer}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="36">
+			<textField textAdjust="StretchHeight">
+				<reportElement x="154" y="0" width="226" height="36" uuid="63eff348-9754-4bcb-8d27-e40575c1a154"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{col_footer}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="116">
+			<componentElement>
+				<reportElement x="224" y="2" width="84" height="58" uuid="aa026550-e139-46dc-9d7b-fd59bab18cf8"/>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA["123456789"]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="154" y="60" width="226" height="56" uuid="790d5383-6587-4170-b4f6-dba7f70f06e3"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Courier New" size="10" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{summary}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

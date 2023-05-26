@@ -49,7 +49,7 @@
   
 ![wampserver](https://user-images.githubusercontent.com/113421154/236776449-e944d2ae-88cd-477a-8ec8-12f4a3caeae4.png)
 <p>Allí simplemente pulsamos en "Nueva" para crear una nueva base de datos a la que debemos llamar "fct"</p>
-  ![phpMyAdmin](https://user-images.githubusercontent.com/113421154/236777096-21dfe055-4184-49d9-97c7-f5af8464cc7d.png)
+![phpMyAdmin](https://user-images.githubusercontent.com/113421154/236777096-21dfe055-4184-49d9-97c7-f5af8464cc7d.png)
   
 <p>Por último, el proyecto utiliza unas tablas maestras que debemos tener con información. Hay que introducir el siguiente Script SQL: </p>
 [ScriptTablasMaestras.txt](https://github.com/HectorVara/ProyectoFCT/files/11419494/ScriptTablasMaestras.txt)<br>

@@ -49,10 +49,32 @@
   
 ![wampserver](https://user-images.githubusercontent.com/113421154/236776449-e944d2ae-88cd-477a-8ec8-12f4a3caeae4.png)
 <p>Allí simplemente pulsamos en "Nueva" para crear una nueva base de datos a la que debemos llamar "fct"</p>
-![phpMyAdmin](https://user-images.githubusercontent.com/113421154/236777096-21dfe055-4184-49d9-97c7-f5af8464cc7d.png)
-  
+
+  ![phpMyAdmin](https://github.com/HectorVara/ProyectoFCT/assets/113421154/c1bac2d2-a5d1-4100-a212-a46e251c6e78)
+
 <p>Por último, el proyecto utiliza unas tablas maestras que debemos tener con información. Hay que introducir el siguiente Script SQL: </p>
 [ScriptTablasMaestras.txt](https://github.com/HectorVara/ProyectoFCT/files/11419494/ScriptTablasMaestras.txt)<br>
 Después de esto ya podemos arrancar el proyecto Spring Boot con la configuración que hemos creado e irnos a https://localhost:8080 para empezar a navegar por la página.<br><br>
+
+![Home](https://github.com/HectorVara/ProyectoFCT/assets/113421154/9c46b400-f11a-4a49-9738-90bfa141492d)
+<p>En la página principal tenemos la opción de cargar los archivos en la base de datos o borrarlos. Lee los datos de los xml de la carpeta resources y los persiste en MySQL. Lo que se ha persistido lo podemos ver en el apartado Tables</p>
+
+![tables](https://github.com/HectorVara/ProyectoFCT/assets/113421154/dc9d7d8f-e0b0-402c-b8b9-e427f5f4b584)
+
+<p>En esta página tenemos un buscador de fecha y tienda. Solo hay dos sesiones en los datos de  este proyecto.
+<ol>
+ <li><strong>Tienda 694, 10/04/2023</strong></li>
+ <li><strong>Tienda 2, 21/10/2023</strong></li>
+</ol>
+</p>
+<p>El resultado es una tabla paginada con datos de todas las operaciones del día. Al pulsar en una fila se despliegan dos tablas debajo de la principal con información de los productos y los pagos relacionados con esa operación. En la primera fila hay un icono de pdf, al pulsarlo nos genera un ticket en pdf de esa operación y se despliega en otra pestaña. Cabe destacar que alguna operación que no sea una transacción(venta, devolución,...) puede no generar el documento.</p>
+
+![tablas_desplegadas](https://github.com/HectorVara/ProyectoFCT/assets/113421154/80906b22-18dc-4830-9563-249645b8c48b)
+
+<p>En la parte de abajo hay dos botones. Uno nos dirige a Resumen.html, donde vemos unas tablas con datos agrupados de la sesión. El otro genera unos ficheros xml y excel con esta información en resources/reports</p>
+
+<p>Y esto es todo. Para cualquier duda me podéis escribir a hvaram@fpcoruna.afundacion.org</p>
+
+
 
 

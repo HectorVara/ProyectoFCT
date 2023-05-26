@@ -54,5 +54,5 @@
 <p>Por último, el proyecto utiliza unas tablas maestras que debemos tener con información. Hay que introducir el siguiente Script SQL: </p>
 [ScriptTablasMaestras.txt](https://github.com/HectorVara/ProyectoFCT/files/11419494/ScriptTablasMaestras.txt)<br>
 Después de esto ya podemos arrancar el proyecto Spring Boot con la configuración que hemos creado e irnos a https://localhost:8080 para empezar a navegar por la página.<br><br>
-<strong>SE ADJUNTAN CON LA ENTREGA DOS ARCHIVOS .ZIP CON LOS XML DE DOS TIENDAS. ES IMPRESCINDIBLE GUARDARLOS EN C:/GestorTickets/XML PARA QUE EL PROGRAMA LOS ENCUENTRE</strong>
+
 

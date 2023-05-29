@@ -10,14 +10,15 @@ import java.util.List;
 
 @Service
 public class Base64Decoder {
+
+    //Esta clase se ocupa de decodificar los tickets que vienen en base 64 en
+    // ListDocumentPrintBuffer-->DocumentPrintBuffer-->Data en el XML
     private JAXBContext jaxbContext = null;
     public List<String> getDataString(List<String> datas){
         List<String> decodes= new ArrayList<>();
         String decodedText = "";
         byte[] decodedTextBytes = null;
-
         for(int i = 0; i < datas.size();i++){
-
             decodedTextBytes = DatatypeConverter.parseBase64Binary(datas.get(i));
             try {
                 decodedText = new String(decodedTextBytes, "UTF-8");
@@ -25,7 +26,6 @@ public class Base64Decoder {
                 e.printStackTrace();
             }
             decodes.add(decodedText);
-            System.out.println(decodes.get(i));
         }
 
         return decodes;

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class Ticket {
-
+//Aquí utilizamos la librería Lombok para los getters y setters
     @Getter @Setter String header;
     @Getter @Setter String body;
     @Getter @Setter String col_footer;

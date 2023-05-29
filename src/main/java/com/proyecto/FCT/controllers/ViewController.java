@@ -103,16 +103,11 @@ public class ViewController {
     }
     @GetMapping("/generateDocuments")
     public String serialize(@RequestParam(required = true) String idStore, @RequestParam(required = true) String date){
-
         try {
             serializeXML.serialize(idStore, date);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-
         return "index";
     }
 }

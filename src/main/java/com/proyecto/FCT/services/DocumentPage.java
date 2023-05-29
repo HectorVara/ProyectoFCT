@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class DocumentPage {
-
+//Esta clase se usa para la paginación de la tabla principal
     @Autowired
     DocumentRepository documentRepository;
 
@@ -27,9 +27,7 @@ public class DocumentPage {
 
     public Page<Document> findPageByStoreAndDate(Pageable pageable, String idStore, String date){
 
-
         List<Document> documents= documentRepository.getIdStoreAndDate(idStore,date);
-
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;

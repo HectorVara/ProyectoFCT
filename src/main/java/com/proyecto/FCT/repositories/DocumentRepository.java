@@ -32,7 +32,7 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Query(value="select p.id as id,p.description as description, CAST(sum(cast(total_gross as decimal(20,2))*sign*sign_void)AS DECIMAL(20,2)) as total " +
             "FROM lineas l, product_type p, documents d where l.product_type_id=p.id and d.id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 " +
             "and l.document_id=d.id GROUP by id,description",nativeQuery = true)
-    List<ICobros> cobros(String idStore, String date);
+    List<ICharges> cobros(String idStore, String date);
     @Query(value="SELECT sum(cast(total_gross as decimal(20,2))*sign*sign_void) from lineas, documents d where id_store=?1 AND SUBSTRING(d.DATE,1,10)=?2 and d.id = document_id",nativeQuery = true)
     double totalCobros(String idStore, String date);
     @Query(value = "SELECT ED.DATA FROM ENCODED_DATA ED INNER JOIN DOCUMENTS D ON D.ID = ED.DOCUMENT_ID WHERE D.ID = ?1", nativeQuery = true)

@@ -2,7 +2,7 @@ package com.proyecto.FCT.services;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.proyecto.FCT.models.XMLSerializationModels.Transactions;
-import com.proyecto.FCT.models.queryModels.ICobros;
+import com.proyecto.FCT.models.queryModels.ICharges;
 import com.proyecto.FCT.models.queryModels.IPayments;
 import com.proyecto.FCT.models.queryModels.ISales;
 import com.proyecto.FCT.repositories.DocumentRepository;
@@ -27,7 +27,7 @@ public class SerializeXML {
     public Transactions serialize(String idStore, String date) throws IOException {
 
         List<IPayments> payments = documentRepository.payments(idStore,date);
-        List<ICobros> cobros = documentRepository.cobros(idStore,date);
+        List<ICharges> cobros = documentRepository.cobros(idStore,date);
         List<ISales> sales = documentRepository.sales(idStore, date);
         Double totalCobros = documentRepository.totalCobros(idStore, date);
         Double totalPayments = documentRepository.totalPayments(idStore, date);

@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class TransactionsAdapter {
 
-    public Transactions adaptTransactions(List<ISales> iSaleType, List<ICobros> iCobros, List<IPayments> iPayments, double totalPayments, double totalCobros, String idStore, String date){
+    public Transactions adaptTransactions(List<ISales> iSaleType, List<ICharges> iCobros, List<IPayments> iPayments, double totalPayments, double totalCobros, String idStore, String date){
 
         Transactions t = new Transactions();
         t.setMetadata(new Metadata(idStore,date));

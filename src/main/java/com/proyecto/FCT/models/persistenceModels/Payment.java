@@ -2,6 +2,8 @@ package com.proyecto.FCT.models.persistenceModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="payments")
@@ -13,6 +15,7 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
     @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Document document;
     @Column(name = "lineNumber")
     private String lineNumber;

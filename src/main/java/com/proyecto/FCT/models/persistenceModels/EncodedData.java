@@ -3,6 +3,8 @@ package com.proyecto.FCT.models.persistenceModels;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="EncodedData")
@@ -15,6 +17,7 @@ public class EncodedData {
     @ManyToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
     @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Document document;
     @Column(name = "data", length = 100000)
     private String data;

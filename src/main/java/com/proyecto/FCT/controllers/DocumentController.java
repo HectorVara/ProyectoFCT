@@ -78,8 +78,7 @@ PaymentRepository paymentRepository;
     @DeleteMapping("/deleteall")
     public ResponseEntity<String> deleteAllSales(){
         try{
-            lineRepository.deleteAll();
-            paymentRepository.deleteAll();
+
             documentRepository.deleteAll();
             return new ResponseEntity<>("Documentos eliminados con éxito",HttpStatus.OK);
         }catch (Exception e){

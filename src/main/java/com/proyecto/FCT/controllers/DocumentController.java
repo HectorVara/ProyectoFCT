@@ -39,7 +39,11 @@ PaymentRepository paymentRepository;
 
     @GetMapping("/xml")
     public Document parseXML(@RequestParam(required = true) String filename){
-        return parserXMLService.parseXMLandSave(filename);
+        try {
+            return parserXMLService.parseXMLandSave(filename);
+        }catch (Exception e){
+            return null;
+        }
 
 
     }
@@ -61,7 +65,7 @@ PaymentRepository paymentRepository;
         documentRepository.sales(idStore,date).forEach(sales::add);
         return new ResponseEntity<>(sales, HttpStatus.OK);
     }catch (Exception e){
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     }
@@ -72,7 +76,7 @@ PaymentRepository paymentRepository;
             documentRepository.findAll().forEach(documents::add);
             return new ResponseEntity<>(documents, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
     @DeleteMapping("/deleteall")
@@ -128,23 +132,38 @@ PaymentRepository paymentRepository;
 
     @GetMapping("/payments/{id}")
     public ResponseEntity<List<Payment>> findPaymentById(@PathVariable("id") long id){
-        List<Payment> payments = paymentRepository.findByDocument(id);
-
+        List<Payment> payments = new ArrayList<>();
+        try{
+            payments = paymentRepository.findByDocument(id);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(payments, HttpStatus.OK);
 
     }
     @GetMapping("/lines/{id}")
     public ResponseEntity<List<Line>> findLineById(@PathVariable("id") long id){
-        List<Line> lines = lineRepository.findByDocument(id);
+        List<Line> lines = new ArrayList<>();
+        try{
+            lines = lineRepository.findByDocument(id);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
 
         return new ResponseEntity<>(lines, HttpStatus.OK);
 
     }
     @GetMapping("/lines/all")
-    public List<Line> getAllLines(){
-        return lineRepository.findAll();
+    public ResponseEntity<List<Line>> getAllLines(){
+        List<Line> lines= new ArrayList<>();
+        try{
+            lines = lineRepository.findAll();
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(lines,HttpStatus.OK);
     }
 }
 

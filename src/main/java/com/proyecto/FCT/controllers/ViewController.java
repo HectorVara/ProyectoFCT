@@ -50,7 +50,6 @@ public class ViewController {
         if(idStore==null || date==null)
             return getOnePageSalesByStoreAndDate(model,"694", "2023-04-10",1);
         else
-            //return getOnePage(model, 1);
             return getOnePageSalesByStoreAndDate(model,idStore, date,1);
     }
 

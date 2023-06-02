@@ -22,6 +22,7 @@
   <li>Wampserever 3.3.0</li>
   <li>Thyme Leaf</li>
   <li>Javascript</li>
+ <li>Jaspersoft Studio 6.20.3</li>
  </ul>
  <h2>INSTRUCCIONES</h2>
  <p>Para la creación de este proyecto de Spring Boot he utilizado el IDE IntellyJ Idea y voy a explicar los pasos para arrancar el servicio con este IDE, aunque con otros como Eclipse es parecido.</p>
@@ -63,7 +64,7 @@ Después de esto ya podemos arrancar el proyecto Spring Boot con la configuraci�
 <p>En esta página tenemos un buscador de fecha y tienda. Solo hay dos sesiones en los datos de  este proyecto.
 <ol>
  <li><strong>Tienda 694, 10/04/2023</strong></li>
- <li><strong>Tienda 2, 21/10/2023</strong></li>
+ <li><strong>Tienda 2, 21/04/2023</strong></li>
 </ol>
 </p>
 <p>El resultado es una tabla paginada con datos de todas las operaciones del día. Al pulsar en una fila se despliegan dos tablas debajo de la principal con información de los productos y los pagos relacionados con esa operación. En la primera fila hay un icono de pdf, al pulsarlo nos genera un ticket en pdf de esa operación y se despliega en otra pestaña. Cabe destacar que alguna operación que no sea una transacción(venta, devolución,...) puede no generar el documento.</p>
